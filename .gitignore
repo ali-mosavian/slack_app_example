@@ -1,0 +1,7 @@
+.pyenv
+.venv
+.idea
+*.pyc
+*.pyo
+*.egg-info
+*.egg

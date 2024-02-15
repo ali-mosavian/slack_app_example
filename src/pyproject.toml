@@ -1,0 +1,23 @@
+[project]
+name = "slackbot_app"
+version = "0.0.1"
+description = ""
+authors = [
+    {name = "Ali Mosavian", email = "ali@42labs.ai"},
+]
+
+dependencies = [
+    'certifi==2023.7.22',
+    'slack-bolt==1.18.1',
+    'typer==0.9.0',
+]
+
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "None"}
+
+[build-system]
+requires = ["setuptools"]
+
+[project.scripts]
+runbot = "slackbolt_app:main"
