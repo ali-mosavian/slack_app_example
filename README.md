@@ -21,7 +21,7 @@ The first run will take slightly longer as it will install the dependencies.
 python3 -m venv .pyenv
 ```
 
-2. Activate the venv
+2. Activate the venv 
 ```bash
 source .pyenv/bin/activate
 ```

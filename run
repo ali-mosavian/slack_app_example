@@ -1,20 +1,30 @@
 #!/usr/bin/env sh
 set -e
 
-# Verify that python3 is installed
-if ! [ -x "$(command -v python3)" ]; then
+# Find python 3.10 or later
+PYTHON=
+for PY_VERSION in 10 11 12 13; do
+  if [ -x "$(command -v python3.$PY_VERSION)" ]; then
+    PYTHON=$(command -v python3.$PY_VERSION)
+    break
+  fi
+done
+
+if ! [ -x "$PYTHON" ]; then
   echo 'Error: python3 is not installed.' >&2
   exit 1
 fi
 
-SCRIPT_PATH=$(python3 -c "import os; print(os.path.realpath(os.path.dirname('$0')))")
+SCRIPT_PATH=$($PYTHON -c "import os; print(os.path.realpath(os.path.dirname('$0')))")
 
-if [ ! -d ".pyenv" ]; then
-  python3 -m venv $SCRIPT_PATH/.pyenv
+# Create venv, activate it and install dependencies
+if ! [ -d "$SCRIPT_PATH/.pyenv" ]; then
+  $PYTHON -m venv $SCRIPT_PATH/.pyenv
 fi
 
 . $SCRIPT_PATH/.pyenv/bin/activate 2>&1 > /dev/null
 pip install -qU pip
 pip install -qe $SCRIPT_PATH/src
 
+# Run the app
 runbot $@
